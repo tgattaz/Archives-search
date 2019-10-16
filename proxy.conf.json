@@ -1,0 +1,18 @@
+{
+  "/arxiv/*": {
+    "target": "http://export.arxiv.org/api",
+    "secure": false,
+    "pathRewrite": {
+      "^/arxiv": ""
+    },
+    "changeOrigin": true
+  },
+  "/hal/*": {
+  "target": "http://api.archives-ouvertes.fr/search",
+  "secure": false,
+  "pathRewrite": {
+    "^/hal": ""
+  },
+  "changeOrigin": true
+  }
+}
