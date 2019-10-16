@@ -1,15 +1,15 @@
 # ArchivesSearch pre-required :
 1) Node and NPM : https://treehouse.github.io/installation-guides/mac/node-mac.html
-'''
+```
 brew update  
 brew install node
 node -v
-'''
+```
 2) This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.9.
-'''
+```
 npm install -g @angular/cli
 ng --version
-'''
+```
 
 ## Get the Code
 ```
