@@ -35,7 +35,7 @@ export class AppComponent implements OnInit {
         const headers = new HttpHeaders({'Content-Type' : 'application/json', 'Access-Control-Allow-Origin' : '*'});
 
         const httpGet$ = this.http
-            .get("/hal/?q="+filter+"&wt=json&fl=*", {headers})
+            .get("/api/hal/"+filter, {headers})
             .pipe(map(data => _.values(data)));
 
         httpGet$.subscribe(
@@ -47,32 +47,15 @@ export class AppComponent implements OnInit {
 
     }
 
-    ParseString(data: string){
-        var result: any;
-        parser.Parser().parseString(data, (e, r) => {result = r});
-        return result;  
-    }
-
 
     SearchARXIV(filter: string) {
 
-        const my_headers = new HttpHeaders({ 'Content-Type': 'application/xml' }).set('Accept', 'application/xml');
+        const headers = new HttpHeaders({'Content-Type' : 'application/json', 'Access-Control-Allow-Origin' : '*'});
         
-        const options: {
-            headers?: HttpHeaders,
-            observe?: 'body',
-            params?: HttpParams,
-            reportProgress?: boolean,
-            responseType: 'text',
-            withCredentials?: boolean
-        } = {
-            headers: my_headers,
-            responseType: 'text'
-        };
-
+        
         const httpGet$ = this.http
-            .get("/arxiv/query?search_query="+filter,options)
-            .pipe(map(data => _.values(this.ParseString(data))));
+            .get("/api/arxiv/"+filter, {headers})
+            .pipe(map(data => _.values(data)));
 
         httpGet$.subscribe(
             (val) => console.log(val)
