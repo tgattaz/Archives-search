@@ -12,15 +12,11 @@ import { map } from 'rxjs/operators';
 })
 export class AppComponent implements OnInit {
 
-    HAL$:  Observable<any>;
-
-    ARXIV$:  Observable<any>;
+    DATA$:  Observable<any>;
 
     checkHAL: Boolean;
-
     checkARXIV: Boolean;
     
-
     constructor(private http: HttpClient) {
         this.checkHAL=true;
         this.checkARXIV=true;
@@ -28,46 +24,17 @@ export class AppComponent implements OnInit {
 
     ngOnInit() {}
 
-
-    SearchHAL(filter: string) {
-
-
+    Search(filter: string) {
         const headers = new HttpHeaders({'Content-Type' : 'application/json', 'Access-Control-Allow-Origin' : '*'});
 
         const httpGet$ = this.http
-            .get("/api/hal/"+filter, {headers})
+            .get("/api/data/"+filter, {headers})
             .pipe(map(data => _.values(data)));
 
         httpGet$.subscribe(
             (val) => console.log(val)
         );
 
-        this.HAL$ = httpGet$;
-        //this.ARXIV$ = null;
-
+        this.DATA$ = httpGet$;
     }
-
-
-    SearchARXIV(filter: string) {
-
-        const headers = new HttpHeaders({'Content-Type' : 'application/json', 'Access-Control-Allow-Origin' : '*'});
-        
-        
-        const httpGet$ = this.http
-            .get("/api/arxiv/"+filter, {headers})
-            .pipe(map(data => _.values(data)));
-
-        httpGet$.subscribe(
-            (val) => console.log(val)
-        );
-
-        this.ARXIV$ = httpGet$;
-        //this.HAL$ = null;
-
-        
-
-        //this.result$ = httpGet$;
-
-    }
-
 }
