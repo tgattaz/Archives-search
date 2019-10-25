@@ -15,41 +15,21 @@
             <label for="warning" class="btn btn-danger btn-xs">ARXIV <input type="checkbox" id="danger" class="badgebox" [checked]="checkARXIV" (change)="checkARXIV = !checkARXIV"><span class="badge">&#x2713;</span></label>                                                              
         </div>
     </div>
-    <div class="panel" *ngIf="HAL$ | async as datas">
-        <div class="panel" *ngFor="let data of datas">
-
-            <ng-container *ngIf="data.docs.length==0">  
-                <hr>
-                <div class="panel-heading">Aucun résultat pour "{{search_filter.value}}" sur <font color="blue">HAL</font>.</div> 
-            </ng-container>
-            <ng-container *ngIf="checkHAL">  
-                <div class="panel panel-primary" *ngFor="let doc of data.docs" *ngIf="doc.source == 'hal'">
-                    <div class="panel-heading">Title : {{doc.title_s[0]}} -- Publication date : {{doc.submittedDate_tdate | date}} </div> 
-                    <div class="panel-body">
-                        <h4> Authors : <span *ngFor="let author of doc.authFullName_s">{{author}}; </span></h4>
-                        <h4>URI :  <a href="{{doc.uri_s}}" class="btn btn-secondary">Go to source</a> </h4>
-                        <h4>{{doc.label_s}}</h4>
-                    </div>
+    <div class="panel" *ngIf="DATA$ | async as datas">
+        <ng-container *ngIf="datas[0].length==0">  
+            <hr>
+            <p class="panel-heading">Aucun résultat pour "{{search_filter.value}}".</p> 
+        </ng-container>
+        <div class="panel" *ngFor="let data of datas[0]">
+            <div class="panel panel-primary">
+                <h2 class="panel-heading" style="margin-top: 0; margin-bottom: 0;">{{ data.source }} : {{data.titre}} -- Publication date : {{ data.date || fullDate }} </h2> 
+                <div class="panel-body">
+                    <h3> Author : {{ data.auteur }}; </h3>
+                    <h5 *ngIf="data.co_auteurs != null"> Co-Authors : {{ data.co_auteurs }} </h5>
+                    <h4>URI :  <a href="{{ data.uri }}" class="btn btn-secondary">Go to source</a> </h4>
+                    <p>{{data.summary}}</p>
                 </div>
-            </ng-container>            
-        </div>
-    </div>
-    <div class="panel" *ngIf="ARXIV$ | async as datas">
-        <div class="panel" *ngFor="let data of datas">
-            <ng-container *ngIf="!data.entry">  
-                    <hr>
-                    <div class="panel-heading">Aucun résultat pour "{{search_filter.value}}" sur <font color="red">ARXIV</font>.</div> 
-            </ng-container>
-            <ng-container *ngIf="checkARXIV">   
-                <div class="panel panel-danger" *ngFor="let entry of data.entry" *ngIf="doc.source == 'hal'">
-                    <div class="panel-heading">Title : {{entry.title[0]}} -- Publication date : {{entry.published[0] | date}} </div> 
-                    <div class="panel-body">
-                        <h4> Authors : <span *ngFor="let author of entry.author">{{author.name}}; </span></h4>
-                        <h4>URI :  <a href="{{entry.link[0].$.href}}" class="btn btn-secondary">Go to source</a> </h4>
-                        <h4>{{entry.summary[0]}}</h4>
-                    </div>
-                </div>
-            </ng-container>
+            </div>
         </div>
     </div>
 </div>

@@ -28,7 +28,7 @@ export class AppComponent implements OnInit {
         const headers = new HttpHeaders({'Content-Type' : 'application/json', 'Access-Control-Allow-Origin' : '*'});
 
         const httpGet$ = this.http
-            .get("/api/data/"+filter, {headers})
+            .get("/api/archives/"+filter, {headers})
             .pipe(map(data => _.values(data)));
 
         httpGet$.subscribe(
