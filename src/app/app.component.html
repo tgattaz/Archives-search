@@ -16,7 +16,7 @@
         </div>
     </div>
     <div class="panel" *ngIf="DATA$ | async as datas">
-        <ng-container *ngIf="datas[0].length==0">  
+        <ng-container *ngIf="!datas.length">  
             <hr>
             <p class="panel-heading">Aucun résultat pour "{{search_filter.value}}".</p> 
         </ng-container>
