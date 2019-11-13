@@ -22,7 +22,7 @@
         </ng-container>
         <div class="panel" *ngFor="let data of datas[0]">
             <div class="panel panel-primary">
-                <h2 class="panel-heading" style="margin-top: 0; margin-bottom: 0;">{{ data.source }} : {{data.titre}} -- Publication date : {{ data.date || fullDate }} </h2> 
+                <h2 class="panel-heading" style="margin-top: 0; margin-bottom: 0;">{{ data.source }} : {{data.titre}} -- Publication date : {{ data.date | date: 'dd/MM/yyyy' }} </h2> 
                 <div class="panel-body">
                     <h3> Author : {{ data.auteur }}; </h3>
                     <h5 *ngIf="data.co_auteurs != null"> Co-Authors : {{ data.co_auteurs }} </h5>

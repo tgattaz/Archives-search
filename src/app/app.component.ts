@@ -37,4 +37,5 @@ export class AppComponent implements OnInit {
 
         this.DATA$ = httpGet$;
     }
+    
 }
