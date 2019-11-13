@@ -16,15 +16,18 @@ export class AppComponent implements OnInit {
 
     checkHAL: Boolean;
     checkARXIV: Boolean;
+    loading: Boolean;
     
     constructor(private http: HttpClient) {
-        this.checkHAL=true;
-        this.checkARXIV=true;
+        this.checkHAL = true;
+        this.checkARXIV = true;
+        this.loading = false;
     }
 
     ngOnInit() {}
 
     Search(filter: string) {
+        this.loading = true;
         const headers = new HttpHeaders({'Content-Type' : 'application/json', 'Access-Control-Allow-Origin' : '*'});
 
         const httpGet$ = this.http
@@ -32,7 +35,7 @@ export class AppComponent implements OnInit {
             .pipe(map(data => _.values(data)));
 
         httpGet$.subscribe(
-            (val) => console.log(val)
+            (val) => this.loading = false
         );
 
         this.DATA$ = httpGet$;
