@@ -19,18 +19,18 @@
      
     </div>
     <div class="panel" *ngIf="DATA$ | async as datas">
-        <ng-container *ngIf="datas == null">  
+        <ng-container *ngIf="!datas.length">  
             <hr>
-            <p class="panel-heading">Aucun résultat pour "{{search_filter.value}}".</p> 
+            <p class="panel-heading text-center">Aucun résultat pour "{{search_filter.value}}".</p> 
         </ng-container>
         <div class="panel" *ngFor="let data of datas[0]">
-            <div class="card card-primary">
+            <div [className]="data.source=='ARXIV' ? 'card border-primary' : 'card border-danger'">
                 <h2 class="card-header" style="margin-top: 0; margin-bottom: 0;"> {{data.titre}} </h2> 
                 <div class="card-body">
-                    <h3> Author : {{ data.auteur }}; </h3>
+                    <h4> Author : {{ data.auteur }}; </h4>
                     <h5 *ngIf="data.co_auteurs != null"> Co-Authors : {{ data.co_auteurs }} </h5>
-                    <p>{{data.summary}}</p>
-                    <a href="{{ data.url }}" class="btn btn-primary stretched-link"></a>
+                    <p [className]="data.source=='ARXIV' ? 'card-body text-primary' : 'card-body text-danger'">{{data.summary}}</p>
+                    <a href="{{ data.url }}" [className]="data.source=='ARXIV' ? 'btn btn-primary stretched-link' : 'btn btn-danger stretched-link'">Link to the article</a>
                 </div>
                 <div class="card-header text-muted">
                     <p>Published the {{ data.date | date: 'dd/MM/yyyy' }} on {{ data.source }}</p>
