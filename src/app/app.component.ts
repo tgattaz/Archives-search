@@ -41,4 +41,14 @@ export class AppComponent implements OnInit {
         this.DATA$ = httpGet$;
     }
     
+    checkShowed(source: string) {
+        switch(source) {
+            case "HAL" : 
+                return this.checkHAL;
+            case "ARXIV" : 
+                return this.checkARXIV;
+            default : 
+                return false;
+        }
+    }
 }

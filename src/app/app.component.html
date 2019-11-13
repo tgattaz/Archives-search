@@ -8,8 +8,8 @@
         <hr> 
         <div class="row text-left">
             <p>Filters : </p>&nbsp;&nbsp;
-            <label for="primary" class="btn btn-primary btn-xs">HAL <input type="checkbox" id="primary" class="badgebox" [checked]="checkHAL" (change)="checkHAL = !checkHAL"><span class="badge">&#x2713;</span></label>
-            <label for="warning" class="btn btn-danger btn-xs">ARXIV <input type="checkbox" id="danger" class="badgebox" [checked]="checkARXIV" (change)="checkARXIV = !checkARXIV"><span class="badge">&#x2713;</span></label>                                                              
+            <label for="warning" class="btn btn-primary btn-xs">ARXIV <input type="checkbox" id="primary" class="badgebox" [checked]="checkARXIV" (change)="checkARXIV = !checkARXIV"><span class="badge">&#x2713;</span></label>
+            <label for="primary" class="btn btn-danger btn-xs">HAL <input type="checkbox" id="danger" class="badgebox" [checked]="checkHAL" (change)="checkHAL = !checkHAL"><span class="badge">&#x2713;</span></label>
         </div>
     </div>
     <div class="progress-loader panel" [hidden]="!loading" >
@@ -24,7 +24,7 @@
             <p class="panel-heading text-center">Aucun résultat pour "{{search_filter.value}}".</p> 
         </ng-container>
         <div class="panel" *ngFor="let data of datas[0]">
-            <div [className]="data.source=='ARXIV' ? 'card border-primary' : 'card border-danger'">
+            <div *ngIf="checkShowed(data.source)" [className]="data.source=='ARXIV' ? 'card border-primary' : 'card border-danger'">
                 <h2 class="card-header" style="margin-top: 0; margin-bottom: 0;"> {{data.titre}} </h2> 
                 <div class="card-body">
                     <h4> Author : {{ data.auteur }}; </h4>
