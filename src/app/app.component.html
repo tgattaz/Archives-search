@@ -5,11 +5,12 @@
         <input #search_filter
         (keyup.enter)="Search(search_filter.value);" placeholder="Your search">
         &nbsp;&nbsp;&nbsp;<button (click)="Search(search_filter.value);" class="btn btn-info">Search</button>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button (click)="GetToken();" [disabled]="cookie" class="btn btn-success">Get Token</button>
         <hr> 
         <div class="row text-left">
             <p>Filters : </p>&nbsp;&nbsp;
             <label for="primary" class="btn btn-primary btn-xs">ARXIV <input type="checkbox" id="primary" class="badgebox" [checked]="checkARXIV" (change)="checkARXIV = !checkARXIV"><span class="badge">&#x2713;</span></label>
-            <label for="danger" class="btn btn-danger btn-xs">HAL <input type="checkbox" id="danger" class="badgebox" [checked]="checkHAL" (change)="checkHAL = !checkHAL"><span class="badge">&#x2713;</span></label>
+            &nbsp;&nbsp;&nbsp;<label for="danger" class="btn btn-danger btn-xs">HAL <input type="checkbox" id="danger" class="badgebox" [checked]="checkHAL" (change)="checkHAL = !checkHAL"><span class="badge">&#x2713;</span></label>
         </div>
     </div>
     <div class="progress-loader panel" [hidden]="!loading" >
@@ -18,12 +19,18 @@
         </mat-progress-spinner>
      
     </div>
+    <div class="alert alert-danger" role="alert" [hidden]="!error">
+        Votre requête n'a pas pu aboutir car vous n'avez pas de token !
+      </div>
+      <div class="alert alert-primary" role="alert" [hidden]="!cookie_getted">
+        Vous êtes bien connecté à l'API HAL-ARXIV avec un token.
+      </div>
     <div class="panel" *ngIf="DATA$ | async as datas">
-        <ng-container *ngIf="!datas.length">  
+        <ng-container *ngIf="!datas[0].length">  
             <hr>
             <p class="panel-heading text-center">Aucun résultat pour "{{search_filter.value}}".</p> 
         </ng-container>
-        <div class="panel" *ngFor="let data of datas[0]">
+        <div *ngFor="let data of datas[0]">
             <div *ngIf="checkShowed(data.source)" [className]="data.source=='ARXIV' ? 'card border-primary' : 'card border-danger'">
                 <h2 class="card-header" style="margin-top: 0; margin-bottom: 0;"> {{data.titre}} </h2> 
                 <div class="card-body">
@@ -33,7 +40,7 @@
                     <a href="{{ data.url }}" [className]="data.source=='ARXIV' ? 'btn btn-primary stretched-link' : 'btn btn-danger stretched-link'">Link to the article</a>
                 </div>
                 <div class="card-header text-muted">
-                    <p>Published the {{ data.date | date: 'dd/MM/yyyy' }} on {{ data.source }}</p>
+                    <p>Published the {{ data.date | date: 'dd/MM/yyyy' }} on <span [ngClass]="{'badge badge-danger': data.source=='HAL', 'badge badge-primary':data.source=='ARXIV' }">{{ data.source }}</span></p>
                 </div>
             </div>
         </div>
